@@ -4,6 +4,8 @@ const mysql = require("mysql2");
 const app = express();
 const port = 3000;
 
+
+
 // Set up MySQL connection
 const con = mysql.createConnection({
   host: "localhost",
@@ -17,6 +19,9 @@ con.connect(function(err) {
   if (err) throw err;
   console.log("Connected to the database!");
 });
+
+app.use(express.static(path.join(__dirname)));
+
 
 // Serve HTML pages
 app.get("/home", (req, res) => {
@@ -38,4 +43,17 @@ app.get("/orders", (req, res) => {
 // Start the server
 app.listen(port, function () {
   console.log(`Server running on http://localhost:${port}`);
+});
+
+
+app.get("/api/menuitems", (req, res) => {
+  const query = "SELECT name, description, price, image_url, type FROM menuitems";
+  con.query(query, (err, results) => {
+    if (err) {
+      console.error("Error fetching menu items:", err);
+      res.status(500).send("Error fetching menu items.");
+    } else {
+      res.json(results);
+    }
+  });
 });
