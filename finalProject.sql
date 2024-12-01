@@ -52,3 +52,46 @@ CREATE TABLE `reservations` (
 select *
 from reservations;
 
+-- Queries to use in NodeJS files for website
+-- select query for menu items
+select *
+from menuItems
+where type = 'appetizer';
+
+select *
+from menuItems
+where type = 'entree';
+
+select *
+from menuItems
+where type = 'side';
+
+select *
+from menuItems
+where type = 'dessert';
+
+select *
+from menuItems
+where type = 'beverage';
+
+-- insert into for reservation
+insert into reservations values(id, "name sample", "3", "2024-12-01 18:30:00", current_timestamp(), current_timestamp());
+
+-- update info for reservation
+update reservations
+set name = "sample 2", party_size = "4", updated_at = current_timestamp()
+where name = "name sample" and id = "2";
+
+-- delete/cancel a reservation
+delete from reservations where id = 1;
+
+-- insert into for orders
+insert into orders values(id, "name_last", 3, 2, current_timestamp(), 'pending', 'pickup');
+
+-- update info for orders
+update orders
+set food_id = 2
+where user_name = "name_last" and id = 1;
+
+-- delete/cancel an order
+delete from orders where id = 2;
