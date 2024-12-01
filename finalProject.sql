@@ -2,13 +2,12 @@
 --
 DROP TABLE IF EXISTS `menuitems`;
 CREATE TABLE `menuitems` (
-  `food_id` int NOT NULL,
+  `food_id` int NOT NULL PRIMARY KEY,
   `name` text,
   `type` text,
   `description` text,
   `price` double DEFAULT NULL,
-  `image_url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`food_id`)
+  `image_url` varchar(255) DEFAULT NULL
 );
 
 --
