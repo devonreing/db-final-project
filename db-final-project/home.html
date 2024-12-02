@@ -21,7 +21,19 @@
   <main>
     <h2>Experience the Taste of Excellence</h2>
     <p>Join us for a memorable dining experience, where every meal is crafted with care.</p>
+    <br>
+    <h3>Hours of Operation:</h3>
+    <p><b>Monday-Thursday:</b> 11am - 9:30pm <br> <b>Friday-Saturday:</b> 11am - 11pm <br> <b>Sunday:</b> 11am - 9</p>
+
+    <h3>Customer Reviews</h3>
+    <div id="reviews">
+      <!-- Reviews will be dynamically inserted here -->
+    </div>
+
+
   </main>
+
+
 
   <!-- Footer Section -->
   <footer>
@@ -29,3 +41,33 @@
   </footer>
 </body>
 </html>
+
+
+<script>
+  async function loadReviews() {
+    try {
+      const response = await fetch("/api/reviews");
+      const reviews = await response.json();
+
+      const reviewsContainer = document.getElementById("reviews");
+      reviews.forEach(review => {
+        const reviewCard = document.createElement("div");
+        reviewCard.className = "review-card";
+
+        reviewCard.innerHTML = `
+          <h4>${review.reviewer_name}</h4>
+          <div class="rating">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</div>
+          <p>${review.review_text}</p>
+          <small>${new Date(review.created_at).toLocaleDateString()}</small>
+        `;
+
+        reviewsContainer.appendChild(reviewCard);
+      });
+    } catch (error) {
+      console.error("Error loading reviews:", error);
+    }
+  }
+
+  // Load reviews when the page loads
+  document.addEventListener("DOMContentLoaded", loadReviews);
+</script>

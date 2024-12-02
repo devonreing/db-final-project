@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname)));
 
 
 // Serve HTML pages
-app.get("/home", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "home.html"));
 });
 
@@ -52,6 +52,20 @@ app.get("/api/menuitems", (req, res) => {
     if (err) {
       console.error("Error fetching menu items:", err);
       res.status(500).send("Error fetching menu items.");
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+
+// Fetch reviews from the database
+app.get("/api/reviews", (req, res) => {
+  const query = "SELECT reviewer_name, rating, review_text, created_at FROM review ORDER BY created_at DESC";
+  con.query(query, (err, results) => {
+    if (err) {
+      console.error("Error fetching reviews:", err);
+      res.status(500).send("Error fetching reviews.");
     } else {
       res.json(results);
     }
