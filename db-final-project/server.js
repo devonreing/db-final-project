@@ -44,6 +44,10 @@ app.get("/orders", (req, res) => {
   res.sendFile(path.join(__dirname, "orders.html"));
 });
 
+app.get("/checkout", (req, res) => {
+  res.sendFile(path.join(__dirname, "checkout.html"));
+});
+
 // Start the server
 app.listen(port, function () {
   console.log(`Server running on http://localhost:${port}`);
