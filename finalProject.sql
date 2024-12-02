@@ -105,3 +105,38 @@ where user_name = "name_last" and id = 1;
 
 -- delete/cancel an order
 delete from orders where id = 2;
+
+
+
+-- create the 'review' table
+create table review (
+    id int auto_increment primary key,
+    reviewer_name varchar(100) not null,
+    rating int check (rating between 1 and 5),
+    review_text text not null,
+    created_at timestamp default current_timestamp
+);
+
+
+-- insert sample reviews
+insert into review (reviewer_name, rating, review_text) values
+('Emma R.', 5, 'This place is a hidden gem! The food is delicious, and the atmosphere is perfect for a cozy night out. The staff is super friendly, and the service is fast. Highly recommend the Grilled Shrimp—it\'s to die for!'),
+('James T.', 5, 'I was blown away by the creativity of the menu and how fresh everything tasted. The ambiance is chic yet welcoming, and the desserts are out of this world. Will definitely be back!'),
+('Sophia L.', 4, 'We came here for our anniversary dinner, and it was the best choice. The wine selection was excellent, and the steak was cooked to perfection. The only downside was a slight wait, but it was well worth it.'),
+('Chris D.', 5, 'Took the kids for a weekend lunch, and everyone loved it! The portions are generous, and the flavors are amazing. The kids were given crayons and a menu to color on, and the staff were so patient with my little ones.'),
+('Ava K.', 5, 'Came here on a whim, and now I can\'t stop recommending it to friends. The food is delicious, and the vibe is perfect for a date night. Try the potato skins—you won\'t regret it!');
+
+update review set created_at = '2024-02-14' where id = 1;
+update review set created_at = '2024-05-22' where id = 2;
+update review set created_at = '2024-08-09' where id = 3;
+update review set created_at = '2024-10-03' where id = 4;
+update review set created_at = '2024-12-01' where id = 5;
+
+
+
+
+
+
+
+
+
