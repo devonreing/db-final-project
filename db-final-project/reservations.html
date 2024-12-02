@@ -22,7 +22,82 @@
     <h2>Reserve Your Table</h2>
     <p>Book a table in advance to ensure availability.</p>
     <!-- Reservation form will be added here -->
+
+    <form action = "/reserve" method = "POST">
+      <label for="name"> Name: </label>
+      <input type="text" id="name" name="name" required><br><br>
+
+      <label for="date"> Reservation Date: </label>
+      <input type="date" id="date" name="date" required><br><br>
+
+      <label for="time">Time: </label>
+      <select id="time" name="time" required></select><br><br>
+
+      <label for="guests"> Number of Guests: </label>
+      <input type="number" id="guests" name="guests" required
+            min="1" max="10"><br><br>
+
+      <button type="submit"> Submit </button>
+    </form>
+  <script>
+        // convert 24-hour time to 12-hour time
+        function to12HourFormat(hour, minute) {
+            const isPM = hour >= 12;
+            const hour12 = hour % 12 || 12;  // Convert 0 (midnight) to 12
+            const ampm = isPM ? 'PM' : 'AM';
+            const minuteFormatted = minute.toString().padStart(2, '0');
+            return `${hour12}:${minuteFormatted} ${ampm}`;
+        }
+
+        // Function to generate time options in 30-minute intervals
+        function fetchAvailableTimes(date) {
+            fetch(`/available-times?date=${date}`)
+                .then(response => response.json())  // Get the available times as a JSON array
+                .then(times => {
+                    const timeSelect = document.getElementById("time");
+                    timeSelect.innerHTML = '';  // Clear existing options
+
+                    if (times.length > 0) {
+                        // Populate the dropdown with available times
+                        times.forEach(time => {
+                            const [hour, minute] = time.split(':').map(Number);  // Split time string into hour and minute
+
+                            const option = document.createElement("option");
+                            option.value = time;  // Store the time in 24-hour format for submission
+                            option.textContent = to12HourFormat(hour,minute);  // Display in 12-hour format
+                            timeSelect.appendChild(option);
+                        });
+                    } else {
+                        // If no available times, show a message in dropdown
+                        const option = document.createElement("option");
+                        option.value = "";
+                        option.textContent = "No available times for this date";
+                        timeSelect.appendChild(option);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching available times:", error);
+                });
+        }
+
+        // Event listener to fetch available times when the date is changed
+        document.getElementById("date").addEventListener("change", function() {
+            const selectedDate = this.value;
+            if (selectedDate) {
+                fetchAvailableTimes(selectedDate);  // Fetch available times for the selected date
+            }
+        });
+
+        // Initialize available times when the page loads
+        window.onload = function () {
+            const dateField = document.getElementById("date");
+            if (dateField.value) {
+                fetchAvailableTimes(dateField.value);  // Fetch times if there's a default date
+            }
+        };
+    </script>
   </main>
+  
 
   <!-- Footer Section -->
   <footer>

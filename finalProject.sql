@@ -44,11 +44,21 @@ CREATE TABLE `reservations` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` varchar(255) NOT NULL,
   `party_size` int NOT NULL,
-  `reservation_time` datetime NOT NULL,
+  `reservation_time` time NOT NULL,
+  `reservation_date` date NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+-- 
+-- Create constraint for reservations 
+-- 
+ALTER TABLE reservations
+ADD CONSTRAINT unique_reservation UNIQUE (reservation_date, reservation_time);
 
+
+
+
+-- 
 select *
 from reservations;
 
