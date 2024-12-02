@@ -48,7 +48,16 @@ CREATE TABLE `reservations` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+-- 
+-- Create constraint for reservations 
+-- 
+ALTER TABLE reservations
+ADD CONSTRAINT unique_reservation UNIQUE (reservation_date, reservation_time);
 
+
+
+
+-- 
 select *
 from reservations;
 
