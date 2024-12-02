@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Online - Our Restaurant</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- Header Section -->
+<header>
+    <h1>Update your Reservation</h1>
+    <nav>
+        <a href="/home.html">Home</a> |
+        <a href="/menu.html">Menu</a> |
+        <a href="/orders.html">Order Online</a>
+    </nav>
+</header>
+
+<!-- Main Content Section -->
+<main>
+    <h2>Modify your Reservation</h2>
+
+    <!-- Reservation Update Form -->
+
+    <!-- Step 1: fetch reservation information -->
+    <form id = 'search-reservation-form'>
+        <label for = "reservation-id">Enter Reservation Code: </label>
+        <input type = "text" id = "reservation-id" name = "reservation-id" required>
+        <button type="submit">Fetch Reservation Information</button>
+    </form>
+
+
+    <!-- Step 2: update reservation form -->
+    <form action = "/reserve" method = "POST">
+        <label for="name"> Name: </label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="date"> Reservation Date: </label>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <label for="time">Time: </label>
+        <select id="time" name="time" required></select><br><br>
+
+        <label for="guests"> Number of Guests: </label>
+        <input type="number" id="guests" name="guests" required
+               min="1" max="10"><br><br>
+
+        <button type="submit"> Update Reservation </button>
+    </form>
+    <p id="response-message"></p>
+</main>
+
+<!-- Footer Section -->
+<footer>
+    <p>&copy; 2024 Our Restaurant. All Rights Reserved.</p>
+</footer>
+<script>
+    document.getElementById('search-reservation-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const reservationId = document.getElementById('reservation-id').value;
+
+        // Validate the reservation ID
+        if (!reservationId) {
+            alert("Please enter a reservation ID.");
+            return;
+        }
+
+        // Use fetch to send reservation ID to the server to search for reservation details
+        fetch('/search-reservation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ reservation_id: reservationId })
+        })
+            .then(response => response.json()) // Assuming the server returns JSON
+            .then(data => {
+                if (data.success) {
+                    // Populate the form fields with the reservation details
+                    document.getElementById('customer-name').value = data.reservation.customer_name;
+                    document.getElementById('reservation-date').value = data.reservation.reservation_date;
+                    document.getElementById('reservation-time').value = data.reservation.reservation_time;
+                    document.getElementById('number-of-people').value = data.reservation.number_of_people;
+
+                    // Show the update reservation form
+                    document.getElementById('update-reservation-form').style.display = 'block';
+                    document.getElementById('search-reservation-form').style.display = 'none';
+                } else {
+                    // Show error message if reservation not found
+                    document.getElementById('response-message').innerHTML = "Reservation not found. Please check your Reservation ID.";
+                }
+            })
+            .catch(error => {
+                document.getElementById('response-message').innerHTML = "An error occurred. Please try again.";
+                console.error(error);
+            });
+    });
+
+
+
+</script>
+</body>
+</html>

@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname)));
 
 
 // Serve HTML pages
-app.get("/home", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "home.html"));
 });
 
@@ -38,6 +38,10 @@ app.get("/reservations", (req, res) => {
 
 app.get("/orders", (req, res) => {
   res.sendFile(path.join(__dirname, "orders.html"));
+});
+
+app.get("/checkout", (req, res) => {
+  res.sendFile(path.join(__dirname, "checkout.html"));
 });
 
 // Start the server
@@ -56,4 +60,52 @@ app.get("/api/menuitems", (req, res) => {
       res.json(results);
     }
   });
+});
+
+// GET action to fetch the available times for a reservation (one reservation for one time slot)
+
+app.get("/available-times", (req, res) => {
+    console.log("Request to get available times has been received.")
+    // Get the date from the query parameters
+    const date  = req.query.date;
+
+    // Query to find all the pre-existing reservations for the given date
+    const query = "SELECT reservation_time FROM reservations WHERE reservation_date = ?";
+
+    con.query(query, [date], (err, result) => {
+        if (err) {
+            console.error("Error fetching reservations:", err);
+            res.status(500).send("Error fetching available times. Please try again.");
+            return;
+        }
+        console.log(result);
+
+        // Array of reserved times
+        const reservedTimes = result.map(row => {
+            const time = row.reservation_time;
+            return time.slice(0, 5);  // Remove the seconds part (HH:mm)
+        });
+        console.log(reservedTimes)
+
+        // Generate available time slots (10 AM to 10 PM in 30 minute intervals)
+        const availableTimes = [];
+        const startTime = 10; // 10:00 AM
+        const endTime = 22;   // 10:00 PM
+        const step = 30;      // 30 minute intervals
+
+        // Check each time slot and add it to the available list if it's not already reserved
+
+        for (let hour = startTime; hour < endTime; hour++) {
+            for (let minute = 0; minute < 60; minute += step) {
+                const timeFormatted = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+                if (!reservedTimes.includes(timeFormatted)) {
+                    availableTimes.push(timeFormatted);  // Only add if not already reserved
+                }
+            }
+        }
+
+
+        // Send the available times back to the client
+        res.json(availableTimes);
+    });
 });

@@ -12,7 +12,14 @@
     <h1>Welcome to Our Restaurant</h1>
     <nav>
       <a href="/menu.html">Menu</a> |
-      <a href="/reservations.html">Reservations</a> |
+      <div class="dropdown">
+        <a href="javascript:void(0);" class="dropbtn">Reservation Information</a> |
+        <div class="dropdown-content">
+          <a href="/reservations.html">Make a Reservation</a>
+          <a href="/reservationUpdate.html">Update Existing Reservation</a>
+          <a href="/reservationDeletion.html">Delete Existing Reservation</a>
+        </div>
+      </div>
       <a href="/orders.html">Order Online</a>
     </nav>
   </header>
@@ -39,6 +46,7 @@
   <footer>
     <p>&copy; 2024 Our Restaurant. All Rights Reserved.</p>
   </footer>
+
 </body>
 </html>
 
