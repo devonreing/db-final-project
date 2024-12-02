@@ -10,7 +10,7 @@ const port = 3000;
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "password",
+  password: "2Greenblankies",
   database: "finalProject"
 });
 
@@ -22,9 +22,13 @@ con.connect(function(err) {
 
 app.use(express.static(path.join(__dirname)));
 
+// Middleware to parse JSON and URL-encoded data
+app.use(express.json());  // To parse JSON requests
+app.use(express.urlencoded({ extended: true }));  // To parse URL-encoded data
+
 
 // Serve HTML pages
-app.get("/home", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "home.html"));
 });
 
@@ -57,6 +61,43 @@ app.get("/api/menuitems", (req, res) => {
     }
   });
 });
+
+app.post("/reserve",(req,res)=>{
+    console.log("Attempting to reserve date and time.")
+    const {name, date, time, guests} = req.body;
+
+    // insert query into reservations table
+    const query = "INSERT INTO reservations (name, party_size, reservation_time, reservation_date) VALUES (?,?,?,?)";
+
+    if (!name || !guests || !time || !date){
+        console.log("Missing required fields. ");
+    }
+
+    // query execution
+    con.query(query,[name, guests, time, date],(err,result)=>{
+        if (err){
+            console.error("Error inserting reservation: ",err);
+            res.status(500).send("Error processing request. Please try again.");
+            return;
+        }
+        console.log("Reservation added successfully.");
+
+        // execute alert instead of navigating to new page
+        res.send("            <html>\n" +
+            "                <head>\n" +
+            "                    <title>Reservation Confirmation</title>\n" +
+            "                    <script type=\"text/javascript\">\n" +
+            "                        alert(\"Reservation booked! Thank you for booking with us. We look forward to serving you!\");\n" +
+            "                        window.location.href = \"/reservations\";  // Redirect back to the reservations page\n" +
+            "                    </script>\n" +
+            "                </head>\n" +
+            "                <body>\n" +
+            "                </body>\n" +
+            "            </html>\n")
+    });
+
+});
+
 
 // GET action to fetch the available times for a reservation (one reservation for one time slot)
 
@@ -105,3 +146,8 @@ app.get("/available-times", (req, res) => {
         res.json(availableTimes);
     });
 });
+
+
+
+
+
