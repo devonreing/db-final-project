@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname)));
 
 
 // Serve HTML pages
-app.get("/home", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "home.html"));
 });
 
@@ -38,6 +38,10 @@ app.get("/reservations", (req, res) => {
 
 app.get("/orders", (req, res) => {
   res.sendFile(path.join(__dirname, "orders.html"));
+});
+
+app.get("/checkout", (req, res) => {
+  res.sendFile(path.join(__dirname, "checkout.html"));
 });
 
 // Start the server
