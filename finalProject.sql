@@ -1,3 +1,9 @@
+ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'DBFinalProject';
+FLUSH PRIVILEGES;
+-- DBFinalProject5!
+Error Code: 1524. Plugin 'mysql_native_password' is not loaded
+
+SELECT user, host, plugin from mysql.user WHERE plugin='mysql_native_password';
 -- Table structure for table `menuitems`
 --
 DROP TABLE IF EXISTS `menuitems`;
@@ -105,3 +111,81 @@ where user_name = "name_last" and id = 1;
 
 -- delete/cancel an order
 delete from orders where id = 2;
+-- Queries to use in NodeJS files for website
+-- select query for menu items
+select *
+from menuItems
+where type = 'appetizer';
+
+select *
+from menuItems
+where type = 'entree';
+
+select *
+from menuItems
+where type = 'side';
+
+select *
+from menuItems
+where type = 'dessert';
+
+select *
+from menuItems
+where type = 'beverage';
+
+-- insert into for reservation
+insert into reservations values(id, "name sample", "3", "2024-12-01 18:30:00", current_timestamp(), current_timestamp());
+
+-- update info for reservation
+update reservations
+set name = "sample 2", party_size = "4", updated_at = current_timestamp()
+where name = "name sample" and id = "2";
+
+-- delete/cancel a reservation
+delete from reservations where id = 1;
+
+-- insert into for orders
+insert into orders values(id, "name_last", 3, 2, current_timestamp(), 'pending', 'pickup');
+
+-- update info for orders
+update orders
+set food_id = 2
+where user_name = "name_last" and id = 1;
+
+-- delete/cancel an order
+delete from orders where id = 2;
+
+
+
+-- create the 'review' table
+create table review (
+    id int auto_increment primary key,
+    reviewer_name varchar(100) not null,
+    rating int check (rating between 1 and 5),
+    review_text text not null,
+    created_at timestamp default current_timestamp
+);
+
+
+-- insert sample reviews
+insert into review (reviewer_name, rating, review_text) values
+('Emma R.', 5, 'This place is a hidden gem! The food is delicious, and the atmosphere is perfect for a cozy night out. The staff is super friendly, and the service is fast. Highly recommend the Grilled Shrimp—it\'s to die for!'),
+('James T.', 5, 'I was blown away by the creativity of the menu and how fresh everything tasted. The ambiance is chic yet welcoming, and the desserts are out of this world. Will definitely be back!'),
+('Sophia L.', 4, 'We came here for our anniversary dinner, and it was the best choice. The wine selection was excellent, and the steak was cooked to perfection. The only downside was a slight wait, but it was well worth it.'),
+('Chris D.', 5, 'Took the kids for a weekend lunch, and everyone loved it! The portions are generous, and the flavors are amazing. The kids were given crayons and a menu to color on, and the staff were so patient with my little ones.'),
+('Ava K.', 5, 'Came here on a whim, and now I can\'t stop recommending it to friends. The food is delicious, and the vibe is perfect for a date night. Try the potato skins—you won\'t regret it!');
+
+update review set created_at = '2024-02-14' where id = 1;
+update review set created_at = '2024-05-22' where id = 2;
+update review set created_at = '2024-08-09' where id = 3;
+update review set created_at = '2024-10-03' where id = 4;
+update review set created_at = '2024-12-01' where id = 5;
+
+
+
+
+
+
+
+
+

@@ -10,7 +10,7 @@ const port = 3000;
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "password",
+  password: "DBFinalProject5!",
   database: "finalProject"
 });
 
@@ -37,11 +37,40 @@ app.get("/reservations", (req, res) => {
 });
 
 app.get("/orders", (req, res) => {
-  res.sendFile(path.join(__dirname, "orders.html"));
+    res.sendFile(path.join(__dirname, "orders.html"));
+  /*
+  const query = "SELECT name, description, price, image_url, type FROM menuitems";
+
+    con.query(query, function(err, results, fields) {
+        if (err)
+            throw err;
+        else {
+            // start creating the order html page
+        }
+    });
+   */
 });
 
-app.get("/checkout", (req, res) => {
-  res.sendFile(path.join(__dirname, "checkout.html"));
+app.post("/orders", (req, res) => {
+    const user_name = req.body.username;
+    const food_id = req.body.foodid;
+    const quantity = req.body.quantity;
+    const order_time = "CURRENT_TIMESTAMP"; // Use MySQL's CURRENT_TIMESTAMP function
+    const status = "pending";              // Default status
+    const delivery_method = req.body.delivery;
+    var sql_query = "insert into orders values('" + user_name + "','" + food_id + "','" + quantity + "','" + order_time + "','" + status + "','" + delivery_method + "')";
+    con.query(sql_query, function (err, result, fields) {
+        if (err)
+            res.send("Illegal Query" + err)
+        else {
+            console.log(sql_query)
+            success_message = document.createElement("h2")
+            success_message.textContent = "Order Confirmed!"
+        }
+
+
+    })
+    //res.sendFile(path.join(__dirname, "checkout.html"));
 });
 
 // Start the server
@@ -60,6 +89,18 @@ app.get("/api/menuitems", (req, res) => {
       res.json(results);
     }
   });
+});
+
+app.get("/api/menuitemsfororder", (req, res) => {
+    const query = "SELECT food_id, name, description, price, image_url, type FROM menuitems";
+    con.query(query, (err, results) => {
+        if (err) {
+            console.error("Error fetching menu items:", err);
+            res.status(500).send("Error fetching menu items.");
+        } else {
+            res.json(results);
+        }
+    });
 });
 
 // Fetch reviews from the database
@@ -122,3 +163,4 @@ app.get("/available-times", (req, res) => {
         res.json(availableTimes);
     });
 });
+
