@@ -195,3 +195,66 @@ footer {
   font-size: 14px;
   color: #555;
 }
+
+/* Dropdown Styling */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: #C70039; /* Match the header background */
+  color: #ffffff; /* White text */
+  padding: 10px 15px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px; /* Smooth edges */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropbtn:hover {
+  background-color: #900C3F; /* Darker crimson on hover */
+  color: #eeeeee; /* Slightly lighter text color */
+}
+
+/* Dropdown content - initially hidden */
+.dropdown-content {
+  display: none; /* Hide by default */
+  position: absolute;
+  background-color: #ffffff; /* White dropdown background */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  z-index: 1;
+  min-width: 200px; /* Consistent width */
+  border-radius: 5px; /* Smooth edges */
+  padding: 5px 0; /* Spacing for items */
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: #333; /* Dark grey text */
+  padding: 10px 15px;
+  text-decoration: none;
+  display: block; /* Stack items vertically */
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect for dropdown links */
+.dropdown-content a:hover {
+  background-color: #f1f1f1; /* Light grey hover effect */
+  color: #C70039; /* Crimson text on hover */
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Adjust spacing between dropdown and other links in nav */
+nav a,
+.dropdown {
+  margin-right: 15px;
+}
+
