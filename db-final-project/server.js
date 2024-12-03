@@ -51,25 +51,27 @@ app.get("/orders", (req, res) => {
    */
 });
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 app.post("/orders", (req, res) => {
-    const user_name = req.body.username;
-    const food_id = req.body.foodid;
-    const quantity = req.body.quantity;
-    const order_time = "CURRENT_TIMESTAMP"; // Use MySQL's CURRENT_TIMESTAMP function
-    const status = "pending";              // Default status
-    const delivery_method = req.body.delivery;
-    var sql_query = "insert into orders values('" + user_name + "','" + food_id + "','" + quantity + "','" + order_time + "','" + status + "','" + delivery_method + "')";
-    con.query(sql_query, function (err, result, fields) {
+    const {username, food_id, quantity } = req.body;
+    const sql_query = "insert into orders (id, user_name, food_id, quantity, order_time, status, delivery_method)" +
+        "values (id, ?, ?, ?, current_timestamp(), \'pending\', \'pickup\')";
+    //var sql_query = "insert into orders values(id, ${user_name}, ${food_id}, ${quan}, current_timestamp(), \'pending\', \'pickup\')";
+    //var sql_query = "insert into orders values(id, '" + user_name + "','" + food_id + "','" + quantity + "','" + order_time + "','" + status + "','" + delivery_method + "')";
+
+    con.query(sql_query, [username, food_id, quantity], (err, result) => {
         if (err)
-            res.send("Illegal Query" + err)
+            res.send("Illegal Query" + err);
         else {
-            console.log(sql_query)
-            success_message = document.createElement("h2")
-            success_message.textContent = "Order Confirmed!"
+            console.log(sql_query);
+            res.send("<h2>Order Confirmed!</h2>");
+            //res.redirect("http://localhost:3000/orders.html");
         }
 
 
-    })
+    });
     //res.sendFile(path.join(__dirname, "checkout.html"));
 });
 
@@ -98,6 +100,7 @@ app.get("/api/menuitemsfororder", (req, res) => {
             console.error("Error fetching menu items:", err);
             res.status(500).send("Error fetching menu items.");
         } else {
+            console.log(results);
             res.json(results);
         }
     });

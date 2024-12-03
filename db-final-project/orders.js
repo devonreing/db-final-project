@@ -25,13 +25,16 @@ fetch("/api/menuitemsfororder")
             cartContainer.innerHTML = '<h2>Cart</h2>';
             const table = document.createElement("table");
             const headerRow = document.createElement("tr");
-            headerRow.innerHTML = `<th>Item</th><th>Quantity</th><th>Price</th><th>Total</th>`;
+            headerRow.innerHTML = `<th>Item Number</th></th><th>Item</th><th>Quantity</th><th>Price</th><th>Total</th>`;
             table.appendChild(headerRow);
 
             let total = 0;
+            const foodIds = [];
+            const quants = [];
             cart.forEach((cartItem) => {
                 const row = document.createElement("tr");
                 row.innerHTML = `
+                  <td>${cartItem.food_id}</td>
                   <td>${cartItem.name}</td>
                   <td>${cartItem.quantity}</td>
                   <td>$${cartItem.price.toFixed(2)}</td>
@@ -39,17 +42,24 @@ fetch("/api/menuitemsfororder")
                 `;
                 table.appendChild(row);
                 total += cartItem.price * cartItem.quantity;
-                const food_id_num = document.getElementById("foodid")
-                food_id_num.textContent = cartItem.food_id
+
+                foodIds.push(cartItem.food_id);
+                quants.push(cartItem.quantity);
+                //const food_id_num = document.getElementById("foodid")
+                //food_id_num.textContent = cartItem.food_id
             });
 
 
             // Add total price
             const totalRow = document.createElement("tr");
-            totalRow.innerHTML = `<td colspan="3">Total</td><td>$${total.toFixed(2)}</td>`;
+            totalRow.innerHTML = `<td colspan="4">Total</td><td>$${total.toFixed(2)}</td>`;
             table.appendChild(totalRow);
 
             cartContainer.appendChild(table);
+
+            // set the hidden inputs in form
+            document.getElementById('foodid').value = foodIds[0];
+            document.getElementById('quantity').value = quants[0];
         };
 
         // Loop through the grouped items and create sections
@@ -63,6 +73,11 @@ fetch("/api/menuitemsfororder")
 
             groupedItems[type].forEach((item) => {
                 const row = document.createElement("tr");
+
+                // Id column
+                const idCell = document.createElement("td");
+                idCell.innerHTML = `${item.food_id}`;
+                row.appendChild(idCell);
 
                 // Image column
                 const imgCell = document.createElement("td");
@@ -104,10 +119,12 @@ fetch("/api/menuitemsfororder")
                     const quantity = parseInt(quantityInput.value);
                     if (quantity > 0) {
                         const cartItem = {
+                            food_id: item.food_id,
                             name: item.name,
                             price: item.price,
-                            quantity,
+                            quantity: quantity,
                         };
+                        //document.getElementById('quantity').value = quantity;
                         cart.push(cartItem);
                         updateCart();
                     }
