@@ -154,6 +154,14 @@ footer {
   justify-content: center;
 }
 
+/* Order Container Styling */
+.order-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
 
 /*Customer Review Styling*/
 #reviews {
