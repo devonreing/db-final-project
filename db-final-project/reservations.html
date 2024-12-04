@@ -52,7 +52,7 @@
         // Function to generate time options in 30-minute intervals
         function fetchAvailableTimes(date) {
             fetch(`/available-times?date=${date}`)
-                .then(response => response.json())  // Get the available times as a JSON array
+                .then(response => response.json())  // Get the available times as JSON array
                 .then(times => {
                     const timeSelect = document.getElementById("time");
                     timeSelect.innerHTML = '';  // Clear existing options
@@ -88,7 +88,7 @@
             }
         });
 
-        // Initialize available times when the page loads
+        // Initialize available times when date field is populated
         window.onload = function () {
             const dateField = document.getElementById("date");
             if (dateField.value) {
