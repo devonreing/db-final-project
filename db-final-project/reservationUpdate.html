@@ -56,12 +56,15 @@
     <p>&copy; 2024 Our Restaurant. All Rights Reserved.</p>
 </footer>
 <script>
+    
+    //listen for user to submit their reservation id 
     document.getElementById('search-reservation-form').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent default form submission
 
+        //store reservationId as a variable for later use
         const reservationId = document.getElementById('reservation-id').value;
 
-        // Validate the reservation ID
+        // Validate reservation ID
         if (!reservationId) {
             alert("Please enter a reservation ID.");
             return;
