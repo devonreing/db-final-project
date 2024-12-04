@@ -60,7 +60,7 @@
                     if (times.length > 0) {
                         // Populate the dropdown with available times
                         times.forEach(time => {
-                            const [hour, minute] = time.split(':').map(Number);  // Split time string into hour and minute
+                            const [hour, minute] = time.split(':').map(Number);  // Split time into hour and minute
 
                             const option = document.createElement("option");
                             option.value = time;  // Store the time in 24-hour format for submission
@@ -68,7 +68,7 @@
                             timeSelect.appendChild(option);
                         });
                     } else {
-                        // If no available times, show a message in dropdown
+                        // If no available times, show message in dropdown
                         const option = document.createElement("option");
                         option.value = "";
                         option.textContent = "No available times for this date";
