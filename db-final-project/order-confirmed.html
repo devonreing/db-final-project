@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Order Confirmed - Our Restaurant</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- Header Section -->
+<header>
+  <h1>Order Online</h1>
+  <nav>
+    <a href="/home.html">Home</a> |
+    <a href="/menu.html">Menu</a> |
+    <div class="dropdown">
+      <a href="javascript:void(0);" class="dropbtn">Reservation Information</a>
+      <div class="dropdown-content">
+        <a href="/reservations.html">Make a Reservation</a>
+        <a href="/reservationUpdate.html">Update Existing Reservation</a>
+        <a href="/reservationDeletion.html">Delete Existing Reservation</a>
+      </div>
+    </div>
+
+  </nav>
+</header>
+
+<!-- Main Content Section -->
+<main>
+  <h2>Online Order Confirmed</h2>
+  <p>If you wish to make any changes to your order, please call us at +1 (267) 756-5276.</p>
+
+  <form action="http://localhost:3000/deleteOrder" method="post">
+    <input type="hidden" id="username" name="username" value="<script>req.body.username</script>">
+    <input type='submit' value="Cancel Order">
+  </form>
+</main>
+</body>
+</html>

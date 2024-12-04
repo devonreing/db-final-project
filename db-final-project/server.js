@@ -10,7 +10,7 @@ const port = 3000;
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "password",
+  password: "DBFinalProject5!",
   database: "finalProject"
 });
 
@@ -66,14 +66,50 @@ app.post("/orders", (req, res) => {
             res.send("Illegal Query" + err);
         else {
             console.log(sql_query);
-            res.send("<h2>Order Confirmed!</h2>");
-            //res.redirect("http://localhost:3000/orders.html");
+            // html_body = "<h2>Order Confirmed!</h2></br>" +
+            //     "<button type='button' onclick='deleteOrder()'> Delete Order </button>" +
+            //     "<script src='orders2.js'></script>"
+            // res.send(html_body);
+
+            res.redirect("http://localhost:3000/order-confirmed?username=" + username);
         }
 
 
     });
     //res.sendFile(path.join(__dirname, "checkout.html"));
 });
+
+
+app.get("/order-confirmed", (req, res) => {
+    res.sendFile(path.join(__dirname, "order-confirmed.html"));
+});
+
+app.post("/deleteOrder", (req, res) => {
+    const {username} = req.body;
+
+    sql_query = "delete from orders where user_name = ?";
+    con.query(sql_query, [username], function (err, result, fields) {
+        if (err)
+            res.send("Illegal Query" + err);
+        else {
+            console.log(sql_query);
+            // send success alert
+            res.send("            <html>\n" +
+                "                <head>\n" +
+                "                    <title>Order Canceled</title>\n" +
+                "                    <script type=\"text/javascript\">\n" +
+                "                        alert(\"Order Canceled.\");\n" +
+                "                        window.location.href = \"/\";  // Redirect back to the home page\n" +
+                "                    </script>\n" +
+                "                </head>\n" +
+                "                <body>\n" +
+                "                </body>\n" +
+                "            </html>\n")
+            //res.redirect("http://localhost:3000/")
+        }
+    });
+});
+
 
 // Start the server
 app.listen(port, function () {
