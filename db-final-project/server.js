@@ -71,7 +71,7 @@ app.post("/orders", (req, res) => {
             //     "<script src='orders2.js'></script>"
             // res.send(html_body);
 
-            res.redirect("http://localhost:3000/order-confirmed?username=" + username);
+            res.redirect("http://localhost:3000/order-confirmed?username=" + username + "&food_id=" + food_id + "&quantity=" + quantity);
         }
 
 
@@ -85,10 +85,10 @@ app.get("/order-confirmed", (req, res) => {
 });
 
 app.post("/deleteOrder", (req, res) => {
-    const {username} = req.body;
+    const {username, food_id, quantity} = req.body;
 
-    sql_query = "delete from orders where user_name = ?";
-    con.query(sql_query, [username], function (err, result, fields) {
+    sql_query = "delete from orders where user_name = ? and food_id = ? and quantity = ?";
+    con.query(sql_query, [username, food_id, quantity], function (err, result, fields) {
         if (err)
             res.send("Illegal Query" + err);
         else {
