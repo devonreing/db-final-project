@@ -229,7 +229,7 @@ app.post("/reserve",(req,res)=>{
             "                    <title>Reservation Confirmation</title>\n" +
             "                    <script type=\"text/javascript\">\n" +
             "                        alert(\"Reservation booked! Thank you for booking with us. We look forward to serving you!\");\n" +
-            "                        window.location.href = \"/reservations\";  // Redirect back to the reservations page\n" +
+            "                        window.location.href = \"/\";  // Redirect back to the reservations page\n" +
             "                    </script>\n" +
             "                </head>\n" +
             "                <body>\n" +
