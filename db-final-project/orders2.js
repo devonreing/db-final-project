@@ -1,3 +1,8 @@
+//*** Devon Reing
+//*** Database Management Systems 
+//*** 12/9/2024
+//*** Final Project
+
 const sql_query = "SELECT name, description, price, image_url, type FROM menuitems";
 
 con.query(sql_query, function(err, result, fields) {
