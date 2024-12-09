@@ -1,3 +1,9 @@
+//*** Erin Zahner, Devon Reing, Sarah Groark
+//*** Database Management Systems 
+//*** 12/9/2024
+//*** Final Project
+
+
 const express = require("express");
 const path = require("path");
 const mysql = require("mysql2");
