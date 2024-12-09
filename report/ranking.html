@@ -1,25 +1,25 @@
-Member 1: State your full name here
-My teammate and I agree that I handled X% of the overall project. My specific tasks included:
+Erin Zahner: 
+My teammates and I agree that I handled 33% of the overall project. My specific tasks included:
+1. I set up the initial SQL database, filling it with general table structures and information needed to get the restaurant website started.
+2. I set up the initial basic HTML pages for the website. I created each page with a general header, body, and footer section and included links to each page in each header. 
+3. I handled inserting all of the menu items needed into the table in SQL, this included names, prices, types, descriptions and pictures to be displayed. 
+4. I then handled dynamically displaying the menu items on the menu page for the website. This involved setting up an API to retrieve the menu items from the database, including details like name, description, price, and image. I then created the HTML structure and used JavaScript to display the items in sections, grouped by type. To ensure the menu is always up-to-date, I ensured the items were pulled directly from the database instead of being hardcoded. I also integrated the page with the server, so menu updates are automatically reflected without modifying the code manually.
+5. I also handled the website's home page. This involved adding the hours of operation and integrating the customer reviews section. I set up an API to fetch reviews from the database, which includes the reviewer’s name, rating, review text, and date. Using JavaScript, I dynamically displayed the reviews on the page in individual cards. This setup ensures that the reviews are always up-to-date and displayed correctly without requiring manual updates. The reviews are automatically fetched and shown in a clean, organized layout.
+6. I did much of the CSS styling including the general page styles with the color theme, as well as styling for the header of each page, the drop-down menu, and the more involved styling of the home and menu pages. 
 
-Task 1: I designed and implemented the program module that ... (provide exact details)
-Task 2: I wrote ... (provide exact details)
-Task 3: I researched ... (provide exact details)
-Task 4: I integrated ... (provide exact details)
-...
+Sarah Groark: 
+My teammates and I agree that I handled 33% of the overall project. My specific tasks included:
+1. I drafted the final report document and outlined the layout for the report. I also wrote the project outline, backend information, and home page of the site pages components. 
+2. I handled the portion of database edits that involved making the database compliant with the reservations functionality. This involved altering the date and time attributes, as well as developing the constraint that would only allow one reservation to be booked at one time of one day. 
+3. I handled the reservations functionality of the site. This was the bulk of my work and included a few things: research, front-end design, and server handling. 
+  a. Research mainly focused on the mechanism in which I could manipulate the backend database using forms in html. This allowed me to utilize insert into, select, update, and delete statements across all three pages for the reservations feature (make a reservation, update a reservation, delete a reservation). 
+  b. Front-end design allowed me to manipulate the style, appearance, and functionality of the forms that the user would use. For example, I wanted the user to be able to select a date from the date field and then have the time field populate with the available times for the chosen day. This required some front-end manipulation to work in tandem with the server that would fetch these available times. For this feature, I added a few different listeners to the front-end to make this kind of dynamic approach possible. Additionally, error handling/input validation and success messaging was used on the front-end (when possible) and prevented users from submitting faulty data, empty form fields, and informed them of the status of the actions. 
+  c. The main portion of the work for the reservations feature of the project was dealing with the server and get/post statements. The select statement was utilized in the make a reservation page as well as the update a reservation page. This statement was responsible for querying the database for the open times for a reservation on the user-chosen date. The update statement was used in the update a reservation page and required the user to enter their ‘reservation code’, which was simply just the primary id of the record. Finally, the delete statement also required the user’s reservation code, and deleted that record from the table.  
 
-Member 2: State your full name here
-My teammate and I agree that I handled Y% of the overall project. My specific tasks included:
 
-Task 1: I designed and implemented the program module that ... (provide exact details)
-Task 2: I wrote ... (provide exact details)
-Task 3: I researched ... (provide exact details)
-Task 4: I integrated ... (provide exact details)
-...
-
-Member 3: State your full name here
-My teammate and I agree that I handled X% of the overall project. My specific tasks included:
-
-Task 1: I designed and implemented the program module that ... (provide exact details)
-Task 2: I wrote ... (provide exact details)
-Task 3: I researched ... (provide exact details)
-Task 4: I integrated ... (provide exact details)
+Devon Reing: 
+My teammates and I agree that I handled 33% of the overall project. My specific tasks included:
+1. I wrote the initial one-page proposal. We had all agreed upon a restaurant website with a menu, reservations, and online orders, but had yet to figure out the exact ways to incorporate all the select, insert into, update and delete functionality into the website. Part of writing this proposal included finding specific ways to incorporate all of those elements.
+2. I handled setting up the GitHub repository for us to use for the project. This included adding access to both Erin and Sarah so that we could all add our work to the repository.
+3. I handled editing the SQL file once it was uploaded onto the Github repository. When it was uploaded, some extra edits were added by Github or MySQL Workbench, making the file hard to read and use efficiently. To fix this, I went through the file to remove any odd comments and updated the syntax of the tables being created so that we could continue with the rest of the project tasks. In doing so, I also added sample queries for us to use in the NodeJS server file according to the select, insert into, update, and delete statements we had planned to include.
+4. For the website, I handled the online orders functionality. This involved creating the orders and order confirmation HTML pages with the CSS styling we used for the entire site. In addition to the HTML pages, I added the pages to the server with both post and get methods so that they were accessible at the appropriate time on the site. On the server, I also modified the API Erin set up to get the menu items to include more information needed for inserting new food items into the database once an online order was placed. Using this API, I finally set up NodeJS pages for the orders page. This allowed the site to be more functional with additional capabilities such as adding to the cart and setting up the menu based on the current state of the menuitems table instead of hardcoding the menu on the site.
