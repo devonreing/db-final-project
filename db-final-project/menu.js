@@ -1,3 +1,8 @@
+//*** Erin Zahner
+//*** Database Management Systems 
+//*** 12/9/2024
+//*** Final Project
+
 fetch("/api/menuitems")
   .then((response) => response.json())
   .then((menuItems) => {
